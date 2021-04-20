@@ -13,6 +13,6 @@ export  async function getStaticProps() {
     props: {
       episodes: data,
     },
-    revalidate: 60 * 60 * 8,
+    revalidate: 60 * 60 * 8, // atualização do projeto (static) feita de 8h em 8h
   }
 }

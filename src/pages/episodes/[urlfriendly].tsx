@@ -1,23 +1,23 @@
 import { format, parseISO } from 'date-fns';
 import ptBR from 'date-fns/locale/pt-BR';
-import Link from 'next/link'
 import { GetStaticPaths, GetStaticProps } from 'next';
 import Image from 'next/image';
+import Link from 'next/link';
 import { api } from '../../services/api';
 import { convertDurationToTimeString } from '../../utils/convertDurationToTimeString';
 import styles from './episode.module.scss';
 
 
 type Episode = {
-    id: String,
-    title: String,
-    thumbnail: String,
-    members: String,
-    duration: Number,
-    durationAsString: String,
-    url: String,
-    description: String,
-    publishedAt: String,
+    id: string,
+    title: string,
+    thumbnail: string,
+    members: string,
+    duration: number,
+    durationAsString: string,
+    url: string,
+    description: string,
+    publishedAt: string,
 }
 
 type EpisodeProps = {
@@ -63,8 +63,27 @@ export default function Episode({episode}: EpisodeProps){
 }
 
 export const getStaticPaths:GetStaticPaths = async () => {
+    //requisição api dos ultimos 2 episódios lançados
+    const { data } = await api.get('episodes', {
+        params: {
+          _limit: 2,
+          _sort: 'published_at',
+          _order: 'desc'
+        }
+      })
+
+    //chamando o id ou nome da pagina para ser gerada estaticamente
+      const paths = data.map(episode => {
+          return {
+              params: {
+                  urlfriendly: episode.id
+              }
+          }
+      })
+
+    //retornando paginas estáticas ou "blocking (gerando pagina ao usuario acessar)""
     return {
-        paths: [],
+        paths,
         fallback: 'blocking',
     }
 }

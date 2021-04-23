@@ -8,14 +8,14 @@ import { convertDurationToTimeString } from "../utils/convertDurationToTimeStrin
 import styles from './home.module.scss'
 
 type Episode = {
-  id: String,
-  title: String,
-  thumbnail: String,
-  members: String,
-  duration: Number,
-  durationAsString: String,
-  url: String,
-  publishedAt: String,
+  id: string,
+  title: string,
+  thumbnail: string,
+  members: string,
+  duration: number,
+  durationAsString: string,
+  url: string,
+  publishedAt: string,
 }
 
 type HomeProps = {

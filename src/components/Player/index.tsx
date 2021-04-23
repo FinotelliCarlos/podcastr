@@ -1,14 +1,34 @@
 import styles from "./styles.module.scss";
-import React, { useContext } from "react";
+import React, { useContext, useEffect, useRef } from "react";
 import Image from "next/image";
-import Slider from 'rc-slider'
-import 'rc-slider/assets/index.css'
+import Slider from "rc-slider";
+import "rc-slider/assets/index.css";
 
 import { PlayerContext } from "../../contexts/PlayerContext";
 
-
 export function Player() {
-  const { episodeList, currentEpisodeIndex } = useContext(PlayerContext);
+  const audioRef = useRef<HTMLAudioElement>(null);
+
+  const {
+    episodeList,
+    currentEpisodeIndex,
+    isPlaying,
+    tooglePlay,
+    setPlayingState,
+  } = useContext(PlayerContext);
+
+  //efeito de play e pause do audio do player
+  useEffect(() => {
+    if (!audioRef.current) {
+      return;
+    }
+
+    if (isPlaying) {
+      audioRef.current.play();
+    } else {
+      audioRef.current.pause();
+    }
+  }, [isPlaying]);
 
   //determinando qual episódio esta tocando
   const episode = episodeList[currentEpisodeIndex];
@@ -38,15 +58,15 @@ export function Player() {
         </div>
       )}
 
-      <footer className={!episode ? styles.empty : ''}>
+      <footer className={!episode ? styles.empty : ""}>
         <div className={styles.progress}>
           <span>00:00</span>
           <div className={styles.slider}>
             {episode ? (
-              <Slider 
-                trackStyle={{backgroundColor: '#04d361'}}
-                railStyle={{backgroundColor: '#9f75ff'}}
-                handleStyle={{borderColor: '#04d361', borderWidth: 4}}
+              <Slider
+                trackStyle={{ backgroundColor: "#04d361" }}
+                railStyle={{ backgroundColor: "#9f75ff" }}
+                handleStyle={{ borderColor: "#04d361", borderWidth: 4 }}
               />
             ) : (
               <div className={styles.emptySlider} />
@@ -56,9 +76,12 @@ export function Player() {
         </div>
 
         {episode && (
-          <audio
-            src={episode.url}
-            autoPlay
+          <audio 
+            src={episode.url} 
+            ref={audioRef} 
+            autoPlay 
+            onPlay={() => setPlayingState(true)}
+            onPause={() => setPlayingState(false)} 
           />
         )}
 
@@ -71,8 +94,17 @@ export function Player() {
             <img src="/play-previous.svg" alt="Tocar Anterior" />
           </button>
 
-          <button type="button" className={styles.playButton} disabled={!episode}>
-            <img src="/play.svg" alt="Tocar" />
+          <button
+            type="button"
+            className={styles.playButton}
+            disabled={!episode}
+            onClick={tooglePlay}
+          >
+            {isPlaying ? (
+              <img src="/pause.svg" alt="Tocar" />
+            ) : (
+              <img src="/play.svg" alt="Tocar" />
+            )}
           </button>
 
           <button type="button" disabled={!episode}>

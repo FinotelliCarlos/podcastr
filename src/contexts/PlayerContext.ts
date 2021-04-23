@@ -14,7 +14,10 @@ type Episode = {
 type PlayerContextData = {
   episodeList: Episode[];
   currentEpisodeIndex: number;
+  isPlaying: boolean;
   play: (episode: Episode) => void;
+  tooglePlay: () => void;
+  setPlayingState: (state: boolean) => void;
 };
 
 //criando e exportando o PlayerContext e atribuindo a este contexto o formato de PlayerContextData

@@ -104,11 +104,21 @@
         border: 0;
         font-size: 0;
 
+        &:disabled {
+            cursor: not-allowed;
+        }
+
         &.playButton {
             width: 4rem;
             height: 4rem;
             border-radius: 1rem;
             background: var(--purple-400);
+
+            transition: filter 0.2s;
+
+            &:hover {
+                filter: brightness(.95);
+            }
         }
     }
 }

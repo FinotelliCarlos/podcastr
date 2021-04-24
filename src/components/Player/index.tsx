@@ -39,13 +39,17 @@ export function Player() {
     }
   }, [isPlaying]);
 
-
   function setupProgressListener(){
     audioRef.current.currentTime = 0;
 
     audioRef.current.addEventListener('timeupdate', () => {
       setProgress(Math.floor(audioRef.current.currentTime));
     });
+  }
+
+  function handleSeek(amount: number) {
+    audioRef.current.currentTime = amount;
+    setProgress(amount);
   }
 
   //determinando qual episódio esta tocando
@@ -84,6 +88,7 @@ export function Player() {
           <div className={styles.slider}>
             {episode ? (
               <Slider
+                onChange={handleSeek}
                 max={episode.duration}
                 value={progress}
                 trackStyle={{ backgroundColor: "#04d361" }}
@@ -101,6 +106,7 @@ export function Player() {
 
         {episode && (
           <audio
+            onLoadedMetadata={setupProgressListener}
             src={episode.url}
             ref={audioRef}
             loop={isLooping}

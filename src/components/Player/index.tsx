@@ -17,6 +17,8 @@ export function Player() {
     playNext,
     playPrevious,
     setPlayingState,
+    hasPrevious,
+    hasNext,
   } = useContext(PlayerContext);
 
   //efeito de play e pause do audio do player
@@ -92,7 +94,7 @@ export function Player() {
             <img src="/shuffle.svg" alt="Embaralhar" />
           </button>
 
-          <button type="button" onClick={playPrevious} disabled={!episode}>
+          <button type="button" onClick={playPrevious} disabled={!episode || !hasPrevious}>
             <img src="/play-previous.svg" alt="Tocar Anterior" />
           </button>
 
@@ -109,7 +111,7 @@ export function Player() {
             )}
           </button>
 
-          <button type="button" onClick={playNext} disabled={!episode}>
+          <button type="button" onClick={playNext} disabled={!episode || !hasNext}>
             <img src="/play-next.svg" alt="Tocar Proximo" />
           </button>
 

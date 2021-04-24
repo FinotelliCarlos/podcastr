@@ -1,10 +1,10 @@
-import styles from "./styles.module.scss";
-import React, { useContext, useEffect, useRef } from "react";
 import Image from "next/image";
 import Slider from "rc-slider";
 import "rc-slider/assets/index.css";
+import React, { useEffect, useRef } from "react";
+import { usePlayer } from "../../contexts/PlayerContext";
+import styles from "./styles.module.scss";
 
-import { PlayerContext } from "../../contexts/PlayerContext";
 
 export function Player() {
   const audioRef = useRef<HTMLAudioElement>(null);
@@ -13,13 +13,14 @@ export function Player() {
     episodeList,
     currentEpisodeIndex,
     isPlaying,
+    isLooping,
     tooglePlay,
     playNext,
     playPrevious,
     setPlayingState,
     hasPrevious,
     hasNext,
-  } = useContext(PlayerContext);
+  } = usePlayer();
 
   //efeito de play e pause do audio do player
   useEffect(() => {
@@ -83,6 +84,7 @@ export function Player() {
           <audio 
             src={episode.url} 
             ref={audioRef} 
+            loop={isLooping}
             autoPlay 
             onPlay={() => setPlayingState(true)}
             onPause={() => setPlayingState(false)} 

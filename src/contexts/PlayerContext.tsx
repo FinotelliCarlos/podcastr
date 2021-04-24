@@ -1,5 +1,5 @@
 //importando createContext de react
-import { createContext, ReactNode, useState } from "react";
+import { createContext, ReactNode, useContext, useState } from "react";
 
 //tipagem somente do que será utilizado do episódio no player
 type Episode = {
@@ -15,6 +15,8 @@ type PlayerContextData = {
   episodeList: Episode[];
   currentEpisodeIndex: number;
   isPlaying: boolean;
+  toogleLoop: boolean;
+  isLooping: boolean;
   playNext: () => void;
   playPrevious: () => void;
   play: (episode: Episode) => void;
@@ -38,6 +40,7 @@ export function PlayerContextProvider({
   const [episodeList, setEpisodeList] = useState([]);
   const [currentEpisodeIndex, setCurrentEpisodeIndex] = useState(0);
   const [isPlaying, setIsPlaying] = useState(false);
+  const [isLooping, setIsLooping] = useState(false);
 
   function play(episode) {
     setEpisodeList([episode]);
@@ -53,6 +56,11 @@ export function PlayerContextProvider({
 
   function tooglePlay() {
     setIsPlaying(!isPlaying);
+  }
+
+  
+  function toogleLoop() {
+    setIsLooping(!isLooping);
   }
 
   function setPlayingState(state: boolean) {
@@ -88,13 +96,19 @@ export function PlayerContextProvider({
         playPrevious,
         playList,
         isPlaying,
+        isLooping,
         tooglePlay,
         setPlayingState,
         hasPrevious,
         hasNext,
+        toogleLoop,
       }}
     >
       {children}
     </PlayerContext.Provider>
   );
+}
+
+export const usePlayer = () => {
+  return useContext(PlayerContext);
 }

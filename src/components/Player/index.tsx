@@ -24,6 +24,7 @@ export function Player() {
     setPlayingState,
     hasPrevious,
     hasNext,
+    clearPlayerState,
   } = usePlayer();
 
   //efeito de play e pause do audio do player
@@ -50,6 +51,14 @@ export function Player() {
   function handleSeek(amount: number) {
     audioRef.current.currentTime = amount;
     setProgress(amount);
+  }
+
+  function handleEpisodeEnded() {
+      if(hasNext) {
+        playNext();
+      } else {
+        clearPlayerState();
+      }
   }
 
   //determinando qual episódio esta tocando
@@ -110,6 +119,7 @@ export function Player() {
             src={episode.url}
             ref={audioRef}
             loop={isLooping}
+            onEnded={handleEpisodeEnded}
             autoPlay
             onPlay={() => setPlayingState(true)}
             onPause={() => setPlayingState(false)}

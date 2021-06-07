@@ -19,8 +19,8 @@
 
 <h1>Preview - WEB</h1>
 <div align="center">
-    <img alt="podcastr" title="podcastr" src="public/preview/previewweb1.jpg" />
-    <img alt="podcastr" title="podcastr" src="public/preview/previewweb2.jpg" />
+    <img alt="podcastr" title="podcastr" src="/public/preview/previewweb1.jpg" />
+    <img alt="podcastr" title="podcastr" src="/public/preview/previewweb2.jpg" />
 </div>
 
 <h1>Executar 💻</h1>

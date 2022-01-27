@@ -44,4 +44,4 @@ yarn dev
 ```
 
 <span>A aplicação poderá ser acessada em [`localhost:3000`](http://localhost:3000).</span><br><br>
-<strong>Também é possivel acessar a aplicação através do link: [Time.xp](https://time-xp.vercel.app/).</strong>
+<strong>Também é possivel acessar a aplicação através do link: [Podcastr](https:/github.com/finotellicarlos).</strong>
